@@ -5,7 +5,7 @@
   "repository": "https://agamimp@dev.azure.com/agamimp/Liel%20Practice/_git/tiles-backend",
   "author": "Liel Almog <liel.almog@agamimp.net>",
   "scripts": {
-    "serve": "nodemon app.ts"
+    "serve": "nodemon ./src/app.ts"
   },
   "license": "MIT",
   "dependencies": {
