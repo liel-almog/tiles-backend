@@ -16,7 +16,7 @@ export const getAll: RequestHandler = async (_req, res, _next) => {
 };
 
 export const getById: RequestHandler<{ id: string }> = async (req, res) => {
-  const id = req?.params?.id;
+  const { id } = req?.params;
 
   try {
     const query = { _id: new ObjectId(id) };
@@ -50,7 +50,7 @@ export const insertOne: RequestHandler = async (req, res) => {
 };
 
 export const replace: RequestHandler<{ id: string }> = async (req, res) => {
-  const id = req?.params?.id;
+  const { id } = req?.params;
 
   try {
     const updatedUser: User = req.body as User;
@@ -71,7 +71,7 @@ export const replace: RequestHandler<{ id: string }> = async (req, res) => {
 };
 
 export const deleteOne: RequestHandler<{ id: string }> = async (req, res) => {
-  const id = req?.params?.id;
+  const { id } = req?.params;
 
   try {
     const query = { _id: new ObjectId(id) };
