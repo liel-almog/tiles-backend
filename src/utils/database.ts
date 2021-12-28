@@ -1,9 +1,11 @@
 import * as mongoDB from "mongodb";
+import User from '../models/model.users'
+import Tile from '../models/model.tiles'
 import env from './dotenv'
 
 export const collections: {
-  users?: mongoDB.Collection;
-  tiles?: mongoDB.Collection;
+  users?: mongoDB.Collection<User>;
+  tiles?: mongoDB.Collection<Tile>;
 } = {};
 
 export async function connectToDatabase() {
@@ -15,11 +17,12 @@ export async function connectToDatabase() {
 
   const db: mongoDB.Db = client.db(process.env.DB_NAME);
 
-  const usersCollection: mongoDB.Collection = db.collection(
+  // Two different ways to indicate collection type
+  const usersCollection: mongoDB.Collection<User> = db.collection(
     env.USERS_COLLECTION_NAME
   );
 
-  const tilesCollection = db.collection(env.TILES_COLLECTION_NAME);
+  const tilesCollection = db.collection<Tile>(env.TILES_COLLECTION_NAME);
 
   collections.users = usersCollection;
   collections.tiles = tilesCollection;
