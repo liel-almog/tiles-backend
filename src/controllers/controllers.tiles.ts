@@ -35,7 +35,7 @@ export const getById: RequestHandler<{ id: string }> = async (req, res) => {
 export const insertOne: RequestHandler = async (req, res) => {
   try {
     const newTile = plainToInstance(Tile, req.body as Tile);
-    await validateOrReject(newTile)
+    await validateOrReject(newTile);
     const result = await collections.tiles?.insertOne(newTile);
 
     result
@@ -54,17 +54,19 @@ export const replace: RequestHandler<{ id: string }> = async (req, res) => {
   const { id } = req?.params;
 
   try {
+    const _id = new ObjectId(id);
     const updatedTile = plainToInstance(Tile, req.body as Tile);
-    await validateOrReject(updatedTile)
-    const query = { _id: new ObjectId(id) };
+    updatedTile._id = _id;
+    await validateOrReject(updatedTile);
 
+    const query = { _id };
     const result = await collections.tiles?.updateOne(query, {
       $set: updatedTile,
     });
 
     result
       ? res.status(200).send(`Successfully updated tile with id ${id}`)
-      : res.status(304).send(`Game with id: ${id} not updated`);
+      : res.status(304).send(`Tile with id: ${id} not updated`);
   } catch (error: any) {
     // tslint:disable-next-line: no-console
     console.error(error.message);

@@ -36,9 +36,12 @@ export const replace: RequestHandler<{ id: string }> = async (req, res) => {
   const { id } = req?.params;
 
   try {
+    const _id = new ObjectId(id)
     const updatedUser = plainToInstance(User, req.body as User);
-    await validateOrReject(updatedUser)
-    const query = { _id: new ObjectId(id) };
+    updatedUser._id = _id
+    await validateOrReject(updatedUser);
+
+    const query = { _id };
 
     const result = await collections.users?.updateOne(query, {
       $set: updatedUser,
@@ -46,7 +49,7 @@ export const replace: RequestHandler<{ id: string }> = async (req, res) => {
 
     result
       ? res.status(200).send(`Successfully updated user with id ${id}`)
-      : res.status(304).send(`Game with id: ${id} not updated`);
+      : res.status(304).send(`User with id: ${id} not updated`);
   } catch (error: any) {
     // tslint:disable-next-line: no-console
     console.error(error.message);
