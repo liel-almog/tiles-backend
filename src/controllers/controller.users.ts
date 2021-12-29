@@ -38,7 +38,10 @@ export const replace: RequestHandler<{ id: string }> = async (req, res) => {
   try {
     const _id = new ObjectId(id)
     const updatedUser = plainToInstance(User, req.body as User);
-    updatedUser._id = _id
+    // tslint:disable-next-line: no-console
+    console.log(updatedUser);
+    
+    // const updatedUser = plainToInstance(User, {...req.body as User, _id});
     await validateOrReject(updatedUser);
 
     const query = { _id };

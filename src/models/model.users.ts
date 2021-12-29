@@ -1,8 +1,12 @@
 import { ObjectId } from "mongodb";
 import { IsEmail, IsEnum, IsNotEmpty } from "class-validator";
 import { Role } from "../types/enum.role";
+import { ExposeId } from "../utils/ExposeId";
+import { Exclude } from "class-transformer";
 
 export default class User {
+  @Exclude()
+  public _id?: ObjectId;
   @IsNotEmpty()
   public name: string;
   @IsEmail()
@@ -10,18 +14,16 @@ export default class User {
   public password: string;
   @IsEnum(Role)
   public role: Role;
-  public _id?: ObjectId;
+  // @ExposeId()
   constructor(
     name: string,
     email: string,
     password: string,
     role = Role.Viewer,
-    _id?: ObjectId
   ) {
     this.name = name;
     this.email = email;
     this.password = password;
-    this._id = _id;
     this.role = role;
   }
 }

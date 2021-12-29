@@ -6,7 +6,7 @@ import {
   getById,
   insertOne,
   replace,
-} from "../controllers/controllers.tiles";
+} from "../controllers/controller.tiles";
 
 export const tilesRouter = express.Router();
 

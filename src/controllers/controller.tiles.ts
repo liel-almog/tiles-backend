@@ -56,7 +56,6 @@ export const replace: RequestHandler<{ id: string }> = async (req, res) => {
   try {
     const _id = new ObjectId(id);
     const updatedTile = plainToInstance(Tile, req.body as Tile);
-    updatedTile._id = _id;
     await validateOrReject(updatedTile);
 
     const query = { _id };
