@@ -1,13 +1,13 @@
 import { RequestHandler, Request, Response } from "express";
+import { plainToInstance } from "class-transformer";
+import { validateOrReject } from "class-validator";
 import { collections } from "../utils/database";
 import { ObjectId } from "mongodb";
 import Tile from "../models/model.tiles";
 
 export const getAll: RequestHandler = async (_req, res, _next) => {
   try {
-    const tiles = (await collections.tiles
-      ?.find({})
-      .toArray()) as unknown as Tile[];
+    const tiles = (await collections.tiles?.find({}).toArray()) as Tile[];
 
     res.status(200).send(tiles);
   } catch (error: any) {
@@ -20,7 +20,7 @@ export const getById: RequestHandler<{ id: string }> = async (req, res) => {
 
   try {
     const query = { _id: new ObjectId(id) };
-    const tile = (await collections.tiles?.findOne(query)) as unknown as Tile;
+    const tile = (await collections.tiles?.findOne(query)) as Tile;
 
     if (tile) {
       res.status(200).send(tile);
@@ -34,8 +34,9 @@ export const getById: RequestHandler<{ id: string }> = async (req, res) => {
 
 export const insertOne: RequestHandler = async (req, res) => {
   try {
-    const newGame = req.body as Tile;
-    const result = await collections.tiles?.insertOne(newGame);
+    const newTile = plainToInstance(Tile, req.body as Tile);
+    await validateOrReject(newTile)
+    const result = await collections.tiles?.insertOne(newTile);
 
     result
       ? res
@@ -53,7 +54,8 @@ export const replace: RequestHandler<{ id: string }> = async (req, res) => {
   const { id } = req?.params;
 
   try {
-    const updatedTile: Tile = req.body as Tile;
+    const updatedTile = plainToInstance(Tile, req.body as Tile);
+    await validateOrReject(updatedTile)
     const query = { _id: new ObjectId(id) };
 
     const result = await collections.tiles?.updateOne(query, {

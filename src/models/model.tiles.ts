@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
 
-export default class User {
-  constructor(public id?: ObjectId) {}
+export default class Tile {
+  constructor(public _id?: ObjectId) {}
 }

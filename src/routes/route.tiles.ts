@@ -10,8 +10,6 @@ import {
 
 export const tilesRouter = express.Router();
 
-tilesRouter.use(express.json());
-
 tilesRouter.use((_req, _res, next) => {
   if (!collections.tiles) {
     throw new Error("We could not find the tile object");
@@ -19,12 +17,6 @@ tilesRouter.use((_req, _res, next) => {
   next();
 });
 
-tilesRouter.get("/", getAll);
+tilesRouter.route("/").get(getAll).post(insertOne);
 
-tilesRouter.get("/:id", getById);
-
-tilesRouter.post("/", insertOne);
-
-tilesRouter.put("/:id", replace);
-
-tilesRouter.delete("/:id", deleteOne);
+tilesRouter.route("/:id").get(getById).put(replace).delete(deleteOne);
