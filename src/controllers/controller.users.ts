@@ -1,13 +1,13 @@
-import { RequestHandler, Request, Response } from "express";
+import { RequestHandler } from "express";
+import { plainToInstance } from "class-transformer";
+import { validateOrReject } from "class-validator";
 import { collections } from "../utils/database";
 import { ObjectId } from "mongodb";
 import User from "../models/model.users";
 
 export const getAll: RequestHandler = async (_req, res, _next) => {
   try {
-    const users = (await collections.users
-      ?.find({})
-      .toArray()) as unknown as User[];
+    const users = (await collections.users?.find({}).toArray()) as User[];
 
     res.status(200).send(users);
   } catch (error: any) {
@@ -20,7 +20,7 @@ export const getById: RequestHandler<{ id: string }> = async (req, res) => {
 
   try {
     const query = { _id: new ObjectId(id) };
-    const user = (await collections.users?.findOne(query)) as unknown as User;
+    const user = (await collections.users?.findOne(query)) as User;
 
     if (user) {
       res.status(200).send(user);
@@ -32,28 +32,12 @@ export const getById: RequestHandler<{ id: string }> = async (req, res) => {
   }
 };
 
-export const insertOne: RequestHandler = async (req, res) => {
-  try {
-    const newGame = req.body as User;
-    const result = await collections.users?.insertOne(newGame);
-
-    result
-      ? res
-          .status(201)
-          .send(`Successfully created a new user with id ${result.insertedId}`)
-      : res.status(500).send("Failed to create a new user.");
-  } catch (error: any) {
-    // tslint:disable-next-line: no-console
-    console.error(error);
-    res.status(400).send(error.message);
-  }
-};
-
 export const replace: RequestHandler<{ id: string }> = async (req, res) => {
   const { id } = req?.params;
 
   try {
-    const updatedUser: User = req.body as User;
+    const updatedUser = plainToInstance(User, req.body as User);
+    await validateOrReject(updatedUser)
     const query = { _id: new ObjectId(id) };
 
     const result = await collections.users?.updateOne(query, {
