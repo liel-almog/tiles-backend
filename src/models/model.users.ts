@@ -15,7 +15,7 @@ export default class User {
     name: string,
     email: string,
     password: string,
-    role: Role,
+    role = Role.Viewer,
     _id?: ObjectId
   ) {
     this.name = name;
