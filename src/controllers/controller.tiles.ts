@@ -8,7 +8,6 @@ import Tile from "../models/model.tiles";
 export const getAll: RequestHandler = async (_req, res, _next) => {
   try {
     const tiles = (await collections.tiles?.find({}).toArray()) as Tile[];
-
     res.status(200).send(tiles);
   } catch (error: any) {
     res.status(500).send(error.message);
@@ -85,7 +84,7 @@ export const deleteOne: RequestHandler<{ id: string }> = async (req, res) => {
     } else if (!result) {
       res.status(400).send(`Failed to remove tile with id ${id}`);
     } else if (!result.deletedCount) {
-      res.status(404).send(`Game with id ${id} does not exist`);
+      res.status(404).send(`Tile with id ${id} does not exist`);
     }
   } catch (error: any) {
     // tslint:disable-next-line: no-console

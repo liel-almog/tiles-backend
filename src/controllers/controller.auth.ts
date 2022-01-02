@@ -39,20 +39,21 @@ export const login: RequestHandler<any, any, LoginReqBody> = async (
   try {
     const { email, password } = req.body;
     const query = { email };
-    const user = (await collections.users?.findOne(query));
+    const user = await collections.users?.findOne(query);
     if (!user) {
-      throw new Error("Email or Password is incorrect")
+      throw new Error("Email or Password is incorrect");
     }
 
     const userPass = user.password;
     const match = await bcrypt.compare(password, userPass);
+    const { password: _password, ...newUser } = user;
 
     if (match) {
-      res.send({ id: user._id, message: "Successfully logged in" });
+      res.send({ user: newUser, message: "Successfully logged in" });
       return;
     }
 
-    throw new Error("Email or Password is incorrect")
+    throw new Error("Email or Password is incorrect");
   } catch (error: any) {
     res.status(400).send(error.message);
     // next(error)
