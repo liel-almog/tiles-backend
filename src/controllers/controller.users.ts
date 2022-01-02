@@ -2,12 +2,38 @@ import { RequestHandler } from "express";
 import { plainToInstance } from "class-transformer";
 import { validateOrReject } from "class-validator";
 import { collections } from "../utils/database";
-import { ObjectId } from "mongodb";
+import { ObjectId, FindOptions } from "mongodb";
 import User from "../models/model.users";
+import { Role } from "../types/enum.role";
 
 export const getAll: RequestHandler = async (_req, res, _next) => {
   try {
-    const users = (await collections.users?.find({}).toArray()) as User[];
+    const users = (await collections.users
+      ?.find({})
+      .project({ password: false })
+      .toArray()) as User[];
+
+    res.status(200).send(users);
+  } catch (error: any) {
+    res.status(500).send(error.message);
+  }
+};
+
+export const getByRole: RequestHandler<{ role: Role | "All" }> = async (
+  req,
+  res,
+  next
+) => {
+  const { role } = req.params;
+
+  try {
+    if (role === "All") {
+      return getAll(req, res, next);
+    }
+
+    // role on can be either Role | 'All'
+    const query = { role } as { role: Role };
+    const users = (await collections.users?.find(query).toArray()) as User[];
 
     res.status(200).send(users);
   } catch (error: any) {
@@ -36,12 +62,8 @@ export const replace: RequestHandler<{ id: string }> = async (req, res) => {
   const { id } = req?.params;
 
   try {
-    const _id = new ObjectId(id)
+    const _id = new ObjectId(id);
     const updatedUser = plainToInstance(User, req.body as User);
-    // tslint:disable-next-line: no-console
-    console.log(updatedUser);
-    
-    // const updatedUser = plainToInstance(User, {...req.body as User, _id});
     await validateOrReject(updatedUser);
 
     const query = { _id };

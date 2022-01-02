@@ -5,6 +5,7 @@ import {
   getAll,
   getById,
   replace,
+  getByRole
 } from "../controllers/controller.users";
 
 export const usersRouter = express.Router();
@@ -17,5 +18,7 @@ usersRouter.use((_req, _res, next) => {
 });
 
 usersRouter.get("/", getAll);
+
+usersRouter.route('/:role').get(getByRole)
 
 usersRouter.route("/:id").get(getById).put(replace).delete(deleteOne);
