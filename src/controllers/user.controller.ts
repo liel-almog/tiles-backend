@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { plainToInstance } from "class-transformer";
 import { validateOrReject } from "class-validator";
 import { collections } from "../utils/database";
-import { ObjectId, FindOptions } from "mongodb";
+import { ObjectId } from "mongodb";
 import User from "../models/user.model";
 import { Role } from "../types/role.enum";
 
@@ -38,6 +38,31 @@ export const getByRole: RequestHandler<{ role: Role | "All" }> = async (
     res.status(200).send(users);
   } catch (error: any) {
     res.status(500).send(error.message);
+  }
+};
+
+type userDetails = { _id: ObjectId; role: Role };
+export const changeRoles: RequestHandler<any, any, userDetails[]> = async (
+  req,
+  res
+) => {
+  try {
+    const bulkWrite = req.body.map(({ _id, role }) => {
+      return {
+        updateOne: {
+          filter: {
+            _id: new ObjectId(_id),
+          },
+          update: { $set: { role } },
+        },
+      };
+    });
+
+    const result = await collections.users?.bulkWrite(bulkWrite);
+    res.status(200).send({ message: `Updated ${result?.nModified} users` });
+  } catch (error: any) {
+    res.status(400).send({message: error.message})
+    throw new Error(error.message);
   }
 };
 

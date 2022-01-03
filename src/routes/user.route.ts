@@ -5,7 +5,8 @@ import {
   getAll,
   getById,
   replace,
-  getByRole
+  getByRole,
+  changeRoles
 } from "../controllers/user.controller";
 
 export const usersRouter = express.Router();
@@ -19,6 +20,8 @@ usersRouter.use((_req, _res, next) => {
 
 usersRouter.get("/", getAll);
 
-usersRouter.route('/:role').get(getByRole)
-
 usersRouter.route("/:id").get(getById).put(replace).delete(deleteOne);
+
+usersRouter.route('/role/:role').get(getByRole)
+
+usersRouter.route('/role').patch(changeRoles)
