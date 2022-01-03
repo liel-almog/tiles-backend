@@ -3,8 +3,8 @@ import { plainToInstance } from "class-transformer";
 import { validateOrReject } from "class-validator";
 import { collections } from "../utils/database";
 import { ObjectId, FindOptions } from "mongodb";
-import User from "../models/model.users";
-import { Role } from "../types/enum.role";
+import User from "../models/user.model";
+import { Role } from "../types/role.enum";
 
 export const getAll: RequestHandler = async (_req, res, _next) => {
   try {

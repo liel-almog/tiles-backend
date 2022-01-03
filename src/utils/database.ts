@@ -1,6 +1,6 @@
 import * as mongoDB from "mongodb";
-import User from '../models/model.users'
-import Tile from '../models/model.tiles'
+import User from '../models/user.model'
+import Tile from '../models/tile.model'
 import env from './dotenv'
 
 export const collections: {

@@ -1,9 +1,9 @@
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import { connectToDatabase } from "./utils/database";
-import { usersRouter } from "./routes/route.users";
-import { tilesRouter } from "./routes/route.tiles";
-import { authRouter } from "./routes/route.auth";
+import { usersRouter } from "./routes/user.route";
+import { tilesRouter } from "./routes/tile.route";
+import { authRouter } from "./routes/auth.route";
 import 'reflect-metadata';
 
 const app = express();

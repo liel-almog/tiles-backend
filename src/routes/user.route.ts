@@ -6,7 +6,7 @@ import {
   getById,
   replace,
   getByRole
-} from "../controllers/controller.users";
+} from "../controllers/user.controller";
 
 export const usersRouter = express.Router();
 

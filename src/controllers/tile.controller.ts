@@ -3,7 +3,7 @@ import { plainToInstance } from "class-transformer";
 import { validateOrReject } from "class-validator";
 import { collections } from "../utils/database";
 import { ObjectId } from "mongodb";
-import Tile from "../models/model.tiles";
+import Tile from "../models/tile.model";
 
 export const getAll: RequestHandler = async (_req, res, _next) => {
   try {

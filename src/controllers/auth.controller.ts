@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { plainToInstance } from "class-transformer";
 import { validateOrReject } from "class-validator";
 import bcrypt from "bcrypt";
-import User from "../models/model.users";
+import User from "../models/user.model";
 import { collections } from "../utils/database";
 
 const saltRounds = 10;

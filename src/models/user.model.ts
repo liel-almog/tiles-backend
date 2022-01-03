@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { IsEmail, IsEnum, IsNotEmpty } from "class-validator";
-import { Role } from "../types/enum.role";
+import { Role } from "../types/role.enum";
 import { ExposeId } from "../utils/ExposeId";
 import { Exclude } from "class-transformer";
 
