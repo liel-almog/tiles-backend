@@ -4,8 +4,9 @@ import {
   deleteOne,
   getAll,
   getById,
-  insertOne,
+  insertMany,
   replace,
+  updateTiles
 } from "../controllers/tile.controller";
 
 export const tilesRouter = express.Router();
@@ -17,6 +18,8 @@ tilesRouter.use((_req, _res, next) => {
   next();
 });
 
-tilesRouter.route("/").get(getAll).post(insertOne);
+tilesRouter.route("/").get(getAll).post(insertMany);
 
 tilesRouter.route("/:id").get(getById).put(replace).delete(deleteOne);
+
+tilesRouter.route('/all').patch(updateTiles)

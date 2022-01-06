@@ -2,7 +2,7 @@ import { RequestHandler, Request, Response } from "express";
 import { plainToInstance } from "class-transformer";
 import { validateOrReject } from "class-validator";
 import { collections } from "../utils/database";
-import { ObjectId } from "mongodb";
+import { AnyBulkWriteOperation, ObjectId } from "mongodb";
 import Tile from "../models/tile.model";
 
 export const getAll: RequestHandler = async (_req, res, _next) => {
@@ -31,9 +31,9 @@ export const getById: RequestHandler<{ id: string }> = async (req, res) => {
   }
 };
 
-export const insertOne: RequestHandler = async (req, res) => {
+export const insertOne: RequestHandler<any, any, Tile> = async (req, res) => {
   try {
-    const newTile = plainToInstance(Tile, req.body as Tile);
+    const newTile = plainToInstance(Tile, req.body);
     await validateOrReject(newTile);
     const result = await collections.tiles?.insertOne(newTile);
 
@@ -47,6 +47,62 @@ export const insertOne: RequestHandler = async (req, res) => {
     console.error(error);
     res.status(400).send(error.message);
   }
+};
+
+export const insertMany: RequestHandler<any, any, Tile[]> = async (
+  req,
+  res
+) => {
+  try {
+    const newTiles = plainToInstance(Tile, req.body);
+    await validateOrReject(newTiles);
+    const result = await collections.tiles?.insertMany(newTiles);
+
+    result
+      ? res
+          .status(201)
+          .send(`Successfully created ${result.insertedCount} tiles`)
+      : res.status(500).send(`Failed to create ${req.body.length} new tiles.`);
+  } catch (error: any) {
+    // tslint:disable-next-line: no-console
+    console.error(error);
+    res.status(400).send(error.message);
+  }
+};
+
+type updatedTiles = { added: Tile[]; changed: Tile[]; deleted: ObjectId[] };
+export const updateTiles: RequestHandler<any, any, updatedTiles> = async (
+  req,
+  res
+) => {
+  const { added, changed, deleted } = req.body;
+  const insert: AnyBulkWriteOperation<Tile>[] = added.map((tile) => {
+    return {
+      insertOne: { document: tile },
+    };
+  });
+
+  const update: AnyBulkWriteOperation<Tile>[] = changed.map(
+    ({ color, _id }) => {
+      return {
+        updateOne: { filter: { _id }, update: { $set: { color } } },
+      };
+    }
+  );
+
+  const del: AnyBulkWriteOperation<Tile> = {
+    deleteMany: { filter: { _id: { $in: deleted } } },
+  };
+  const result = await collections.tiles?.bulkWrite([
+    ...insert,
+    ...update,
+    del,
+  ]);
+  res
+    .status(200)
+    .send(
+      `Inserted ${result?.nInserted}, updated ${result?.nModified}, deleted ${result?.nRemoved}`
+    );
 };
 
 export const replace: RequestHandler<{ id: string }> = async (req, res) => {
