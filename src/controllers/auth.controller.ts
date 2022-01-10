@@ -4,6 +4,8 @@ import { validateOrReject } from "class-validator";
 import bcrypt from "bcrypt";
 import User from "../models/user.model";
 import { collections } from "../utils/database";
+import jwt from "jsonwebtoken";
+import env from "../utils/dotenv";
 
 const saltRounds = 10;
 
@@ -47,9 +49,11 @@ export const login: RequestHandler<any, any, LoginReqBody> = async (
     const userPass = user.password;
     const match = await bcrypt.compare(password, userPass);
     const { password: _password, ...newUser } = user;
+    const token = jwt.sign(newUser, env.JWT_SECRET, { algorithm: "HS256" });
 
     if (match) {
-      res.send({ user: newUser, message: "Successfully logged in" });
+      res
+        .send({ user: newUser, message: "Successfully logged in", token });
       return;
     }
 
