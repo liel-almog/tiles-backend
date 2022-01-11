@@ -1,5 +1,6 @@
 import jwt from "express-jwt";
 import jwksRsa from "jwks-rsa";
+import User from "../models/user.model";
 import env from "../utils/dotenv";
 
 // export const checkJwt = jwt({

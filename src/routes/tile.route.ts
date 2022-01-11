@@ -6,8 +6,10 @@ import {
   getById,
   insertMany,
   replace,
-  updateTiles
+  updateTiles,
 } from "../controllers/tile.controller";
+import { checkPermissions } from "../middleware/permissions.middleware";
+import { Role } from "../types/role.enum";
 
 export const tilesRouter = express.Router();
 
@@ -22,4 +24,9 @@ tilesRouter.route("/").get(getAll).post(insertMany);
 
 tilesRouter.route("/:id").get(getById).put(replace).delete(deleteOne);
 
-tilesRouter.route('/all').patch(updateTiles)
+tilesRouter
+  .route("/all")
+  .patch(
+    checkPermissions([Role.Admin, Role.Moderator, Role.Editor]),
+    updateTiles
+  );

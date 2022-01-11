@@ -4,6 +4,8 @@ import { validateOrReject } from "class-validator";
 import { collections } from "../utils/database";
 import { AnyBulkWriteOperation, ObjectId } from "mongodb";
 import Tile from "../models/tile.model";
+import { Role } from "../types/role.enum";
+import User from "../models/user.model";
 
 export const getAll: RequestHandler = async (_req, res, _next) => {
   try {
@@ -76,8 +78,33 @@ export const updateTiles: RequestHandler<any, any, updatedTiles> = async (
   res
 ) => {
   const { added, changed, deleted } = req.body;
+
+  if ((req.user as User).role === Role.Editor) {
+    // tslint:disable-next-line: no-shadowed-variable
+    const update: AnyBulkWriteOperation<Tile>[] = changed.map(
+      ({ color, _id }) => {
+        const updatedAt = new Date().toUTCString();
+        return {
+          updateOne: {
+            filter: { _id },
+            update: { $set: { color, updatedAt } },
+          },
+        };
+      }
+    );
+
+    // tslint:disable-next-line: no-shadowed-variable
+    const result = await collections.tiles?.bulkWrite(update);
+    return res.status(200).send({
+      message: `
+      Updated ${result?.nModified} ${
+        result?.nModified === 1 ? "tile" : "tiles"
+      }`,
+    });
+  }
+
   const insert: AnyBulkWriteOperation<Tile>[] = added.map((plainTile) => {
-    const tile = plainToInstance(Tile, plainTile)
+    const tile = plainToInstance(Tile, plainTile);
     return {
       insertOne: { document: tile },
     };

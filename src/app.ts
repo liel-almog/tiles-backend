@@ -6,7 +6,7 @@ import { tilesRouter } from "./routes/tile.route";
 import { authRouter } from "./routes/auth.route";
 import cookieParser from "cookie-parser";
 import "reflect-metadata";
-import { checkJwt } from "./middleware/auth";
+import { checkJwt } from "./middleware/auth.middleware";
 
 const app = express();
 const port = 8080;
