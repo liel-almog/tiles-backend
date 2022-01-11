@@ -7,8 +7,8 @@ export default class Tile {
   // @Exclude()
   public _id?: ObjectId;
   public color: string;
-  // public createdAt = new Date();
-  // public updatedAt = new Date();
+  public createdAt = new Date().toUTCString();
+  public updatedAt = new Date().toUTCString();
 
   constructor(color: string) {
     this.color = color;

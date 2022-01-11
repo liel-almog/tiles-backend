@@ -76,7 +76,8 @@ export const updateTiles: RequestHandler<any, any, updatedTiles> = async (
   res
 ) => {
   const { added, changed, deleted } = req.body;
-  const insert: AnyBulkWriteOperation<Tile>[] = added.map((tile) => {
+  const insert: AnyBulkWriteOperation<Tile>[] = added.map((plainTile) => {
+    const tile = plainToInstance(Tile, plainTile)
     return {
       insertOne: { document: tile },
     };
@@ -84,8 +85,9 @@ export const updateTiles: RequestHandler<any, any, updatedTiles> = async (
 
   const update: AnyBulkWriteOperation<Tile>[] = changed.map(
     ({ color, _id }) => {
+      const updatedAt = new Date().toUTCString();
       return {
-        updateOne: { filter: { _id }, update: { $set: { color } } },
+        updateOne: { filter: { _id }, update: { $set: { color, updatedAt } } },
       };
     }
   );
@@ -93,11 +95,13 @@ export const updateTiles: RequestHandler<any, any, updatedTiles> = async (
   const del: AnyBulkWriteOperation<Tile> = {
     deleteMany: { filter: { _id: { $in: deleted } } },
   };
+
   const result = await collections.tiles?.bulkWrite([
     ...insert,
     ...update,
     del,
   ]);
+
   res.status(200).send({
     message: `
     Inserted ${result?.nInserted} ${result?.nInserted === 1 ? "tile" : "tiles"}
