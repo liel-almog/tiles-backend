@@ -22,7 +22,7 @@ tilesRouter.use((_req, _res, next) => {
 
 tilesRouter
   .route("/")
-  .get(getAll)
+  .get(checkPermissions([...Object.values(Role)]), getAll)
   .post(insertMany)
   .patch(
     checkPermissions([Role.Admin, Role.Moderator, Role.Editor]),
