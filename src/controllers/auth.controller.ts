@@ -28,7 +28,7 @@ export const signup: RequestHandler = async (req, res) => {
   } catch (error: any) {
     // tslint:disable-next-line: no-console
     console.error(error);
-    res.status(400).send(error.message);
+    res.status(400).send("Failed to create a new user.");
   }
 };
 

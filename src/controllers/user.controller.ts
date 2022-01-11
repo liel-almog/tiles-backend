@@ -59,9 +59,14 @@ export const changeRoles: RequestHandler<any, any, userDetails[]> = async (
     });
 
     const result = await collections.users?.bulkWrite(bulkWrite);
-    res.status(200).send({ message: `Updated ${result?.nModified} users` });
+    const updatedUsers = result?.nModified;
+    res.status(200).send({
+      message: `Updated ${updatedUsers} ${
+        updatedUsers === 1 ? "user" : "users"
+      }`,
+    });
   } catch (error: any) {
-    res.status(400).send({message: error.message})
+    res.status(400).send({ message: error.message });
     throw new Error(error.message);
   }
 };
@@ -79,7 +84,9 @@ export const getById: RequestHandler<{ id: string }> = async (req, res) => {
   } catch (error) {
     res
       .status(404)
-      .send(`Unable to find matching document with id: ${req.params.id}`);
+      .send({
+        message: `Unable to find matching document with id: ${req.params.id}`,
+      });
   }
 };
 

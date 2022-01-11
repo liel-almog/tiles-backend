@@ -98,11 +98,12 @@ export const updateTiles: RequestHandler<any, any, updatedTiles> = async (
     ...update,
     del,
   ]);
-  res
-    .status(200)
-    .send(
-      `Inserted ${result?.nInserted}, updated ${result?.nModified}, deleted ${result?.nRemoved}`
-    );
+  res.status(200).send({
+    message: `
+    Inserted ${result?.nInserted} ${result?.nInserted === 1 ? "tile" : "tiles"}
+    Updated ${result?.nModified} ${result?.nModified === 1 ? "tile" : "tiles"}
+    Deleted ${result?.nRemoved} ${result?.nRemoved === 1 ? "tile" : "tiles"}`,
+  });
 };
 
 export const replace: RequestHandler<{ id: string }> = async (req, res) => {
