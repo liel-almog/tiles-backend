@@ -20,13 +20,12 @@ tilesRouter.use((_req, _res, next) => {
   next();
 });
 
-tilesRouter.route("/").get(getAll).post(insertMany);
-
-tilesRouter.route("/:id").get(getById).put(replace).delete(deleteOne);
-
 tilesRouter
-  .route("/all")
+  .route("/")
+  .get(getAll)
+  .post(insertMany)
   .patch(
     checkPermissions([Role.Admin, Role.Moderator, Role.Editor]),
     updateTiles
   );
+tilesRouter.route("/:id").get(getById).put(replace).delete(deleteOne);
