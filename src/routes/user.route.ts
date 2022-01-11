@@ -24,7 +24,7 @@ usersRouter.use(checkPermissions([Role.Admin]));
 
 usersRouter.get("/", getAll);
 
-usersRouter.route("/:id").get(getById).put(replace).delete(deleteOne);
+// usersRouter.route("/:id").get(getById).put(replace).delete(deleteOne);
 
 usersRouter.route("/role/:role").get(getByRole);
 

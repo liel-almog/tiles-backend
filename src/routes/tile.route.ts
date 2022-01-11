@@ -23,9 +23,10 @@ tilesRouter.use((_req, _res, next) => {
 tilesRouter
   .route("/")
   .get(checkPermissions([...Object.values(Role)]), getAll)
-  .post(insertMany)
+  // .post(insertMany)
   .patch(
     checkPermissions([Role.Admin, Role.Moderator, Role.Editor]),
     updateTiles
   );
-tilesRouter.route("/:id").get(getById).put(replace).delete(deleteOne);
+
+// tilesRouter.route("/:id").get(getById).put(replace).delete(deleteOne);
