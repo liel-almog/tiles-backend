@@ -1,15 +1,10 @@
 import express from "express";
-import { collections } from "../utils/database";
 import {
-  deleteOne,
-  getAll,
-  getById,
-  insertMany,
-  replace,
-  updateTiles,
+  getAll, updateTiles
 } from "../controllers/tile.controller";
 import { checkPermissions } from "../middleware/permissions.middleware";
 import { Role } from "../types/role.enum";
+import { collections } from "../utils/database";
 
 export const tilesRouter = express.Router();
 

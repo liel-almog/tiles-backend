@@ -1,10 +1,10 @@
-import { RequestHandler } from "express";
+import bcrypt from "bcrypt";
 import { plainToInstance } from "class-transformer";
 import { validateOrReject } from "class-validator";
-import bcrypt from "bcrypt";
+import { RequestHandler } from "express";
+import jwt from "jsonwebtoken";
 import User from "../models/user.model";
 import { collections } from "../utils/database";
-import jwt from "jsonwebtoken";
 import env from "../utils/dotenv";
 
 const saltRounds = 10;

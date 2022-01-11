@@ -1,15 +1,10 @@
-import express, { Router } from "express";
-import { collections } from "../utils/database";
+import express from "express";
 import {
-  deleteOne,
-  getAll,
-  getById,
-  replace,
-  getByRole,
-  changeRoles,
+  changeRoles, getAll, getByRole
 } from "../controllers/user.controller";
 import { checkPermissions } from "../middleware/permissions.middleware";
 import { Role } from "../types/role.enum";
+import { collections } from "../utils/database";
 
 export const usersRouter = express.Router();
 

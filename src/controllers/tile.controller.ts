@@ -1,11 +1,11 @@
-import { RequestHandler, Request, Response } from "express";
 import { plainToInstance } from "class-transformer";
 import { validateOrReject } from "class-validator";
-import { collections } from "../utils/database";
+import { RequestHandler } from "express";
 import { AnyBulkWriteOperation, ObjectId } from "mongodb";
 import Tile from "../models/tile.model";
-import { Role } from "../types/role.enum";
 import User from "../models/user.model";
+import { Role } from "../types/role.enum";
+import { collections } from "../utils/database";
 
 export const getAll: RequestHandler = async (_req, res, _next) => {
   try {
