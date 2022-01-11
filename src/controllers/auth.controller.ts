@@ -5,7 +5,6 @@ import { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/user.model";
 import { collections } from "../utils/database";
-import env from "../utils/dotenv";
 
 const saltRounds = 10;
 
@@ -33,11 +32,7 @@ export const signup: RequestHandler = async (req, res) => {
 };
 
 type LoginReqBody = { email: string; password: string };
-export const login: RequestHandler<any, any, LoginReqBody> = async (
-  req,
-  res,
-  next
-) => {
+export const login: RequestHandler<any, any, LoginReqBody> = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const query = { email };
@@ -49,10 +44,11 @@ export const login: RequestHandler<any, any, LoginReqBody> = async (
     const userPass = user.password;
     const match = await bcrypt.compare(password, userPass);
     const { password: _password, ...newUser } = user;
-    const token = jwt.sign(newUser, env.JWT_SECRET, { algorithm: "HS256" });
+    const token = jwt.sign(newUser, process.env.JWT_SECRET!, { algorithm: "HS256" });
 
     if (match) {
       res
+        .cookie("token", token, { sameSite: "lax", secure: false })
         .send({ user: newUser, message: "Successfully logged in", token });
       return;
     }

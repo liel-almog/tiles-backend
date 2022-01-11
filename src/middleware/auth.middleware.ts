@@ -1,23 +1,25 @@
 import jwt from "express-jwt";
-import env from "../utils/dotenv";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // export const checkJwt = jwt({
-//   // secret: env.JWT_SECRET
+//   // secret: process.env.JWT_SECRET
 //   secret: jwksRsa.expressJwtSecret({
 //     cache: true,
 //     rateLimit: true,
 //     jwksRequestsPerMinute: 5,
-//     jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+//     jwksUri: `https://${process.process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
 //   }),
 
 //   // Validate the audience and the issuer.
-//   audience: process.env.AUTH0_AUDIENCE,
-//   issuer: `https://${process.env.AUTH0_DOMAIN}/`,
+//   audience: process.process.env.AUTH0_AUDIENCE,
+//   issuer: `https://${process.process.env.AUTH0_DOMAIN}/`,
 //   algorithms: ["RS256"]
 // });
 
 export const checkJwt = jwt({
-  secret: env.JWT_SECRET,
+  secret: process.env.JWT_SECRET!,
   algorithms: ["HS256"],
   requestProperty: "user",
   getToken: function fromHeaderOrQuerystring(req) {
