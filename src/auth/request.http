@@ -1,0 +1,12 @@
+### Create user
+POST http://localhost:8080/auth/signup 
+content-type: application/json
+
+{
+    "name": "sample",
+    "email": "liel@gmail.com",
+    "password": "1dfs1234"
+}
+
+###
+Get http://localhost:8080/tile
