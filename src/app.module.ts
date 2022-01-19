@@ -21,6 +21,8 @@ import { UserModule } from "./user/user.module";
       url: process.env.DB_CONN_STRING,
       database: "tilesDB",
       entities: [User, Tile],
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
     }),
   ],
   controllers: [AppController],
