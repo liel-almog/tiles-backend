@@ -9,4 +9,10 @@ content-type: application/json
 }
 
 ###
-Get http://localhost:8080/tile
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+    "email": "liel@as.com",
+    "password": "as"
+}
