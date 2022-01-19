@@ -1,4 +1,5 @@
-import { Column, Entity, ObjectID, ObjectIdColumn } from "typeorm";
+import { ObjectID } from "mongodb";
+import { Column, Entity, ObjectIdColumn } from "typeorm";
 
 @Entity()
 export class Tile {
@@ -6,11 +7,11 @@ export class Tile {
   _id: ObjectID;
 
   @Column()
-  color: string
+  color: string;
 
   @Column()
-  createdAt = new Date().toISOString()
+  createdAt = new Date().toISOString();
 
   @Column()
-  updatedAt = new Date().toISOString()
+  updatedAt = new Date().toISOString();
 }
