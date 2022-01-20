@@ -1,0 +1,23 @@
+### Get all tiles
+GET http://localhost:8080/tile
+
+
+### Create a tile
+PATCH http://localhost:8080/tile
+Content-Type: application/json
+
+{
+    "changed": [
+        {
+            "color": "#FFB085",
+            "_id": "61e92ca7eac1a7a669a15e3f"
+        }
+    ],
+    "added": [
+        {
+            "color": "#90AACB",
+            "_id": "61e92ca7eac1a7a669a15e3f"
+        }
+    ],
+    "deleted": ["61e92bfa0c7eb3897f24b089"]
+}

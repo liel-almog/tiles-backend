@@ -1,17 +1,42 @@
-import { ObjectID } from "mongodb";
-import { Column, Entity, ObjectIdColumn } from "typeorm";
+import { Type } from "class-transformer";
+import { ObjectId } from "mongodb";
+import {
+  AfterInsert,
+  AfterRemove,
+  AfterUpdate,
+  Column,
+  Entity,
+  ObjectID,
+  ObjectIdColumn
+} from "typeorm";
 
 @Entity()
 export class Tile {
   @ObjectIdColumn()
-  _id: ObjectID;
+  @Type(() => ObjectID)
+  _id: ObjectId;
 
   @Column()
   color: string;
 
   @Column()
-  createdAt = new Date().toISOString();
+  createdAt = new Date().toUTCString();
 
   @Column()
-  updatedAt = new Date().toISOString();
+  updatedAt = new Date().toUTCString();
+
+  @AfterInsert()
+  logInsert() {
+    console.log("Insert");
+  }
+
+  @AfterRemove()
+  logRemove() {
+    console.log("Remove");
+  }
+
+  @AfterUpdate()
+  logUpdate() {
+    console.log("Insert");
+  }
 }
