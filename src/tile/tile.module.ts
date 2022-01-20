@@ -1,11 +1,22 @@
 import { Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
+import { MongooseModule } from "@nestjs/mongoose";
+import { Tile, TileSchema } from "src/schemas/tile.schema";
 import { TileController } from "./tile.controller";
-import { TileRepository } from "./tile.repository";
 import { TileService } from "./tile.service";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TileRepository])],
+  imports: [
+    MongooseModule.forFeatureAsync([
+      {
+        name: Tile.name,
+        useFactory: () => {
+          const schema = TileSchema;
+          schema
+          return schema
+        },
+      },
+    ]),
+  ],
   controllers: [TileController],
   providers: [TileService],
 })

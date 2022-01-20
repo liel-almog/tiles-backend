@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Patch, Post } from "@nestjs/common";
-import { UpdateTiles } from "./dtos/update-tiles.dto";
+import { Controller, Get, Post } from "@nestjs/common";
 import { TileService } from "./tile.service";
 
 @Controller("tile")
@@ -11,13 +10,14 @@ export class TileController {
     return this.service.find();
   }
 
-  @Patch()
-  modifyAll(@Body() updateTiles: UpdateTiles) {
-    return this.service.modifyAll(updateTiles);
-  }
-
   @Post()
   test() {
     return this.service.test();
   }
+
+  // @Patch()
+  // modifyAll(@Body() updateTiles: UpdateTiles) {
+  //   return this.service.modifyAll(updateTiles);
+  // }
+
 }

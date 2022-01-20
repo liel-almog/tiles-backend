@@ -1,9 +1,8 @@
 import { ObjectID } from "bson";
 import { Type } from "class-transformer";
 import { IsArray, IsMongoId, IsString, ValidateNested } from "class-validator";
-import { Tile } from "src/models/tile.entity";
 
-class TileDTO extends Tile {
+class TileDTO {
   @IsMongoId()
   _id: ObjectID;
 
