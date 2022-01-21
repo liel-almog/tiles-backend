@@ -3,16 +3,10 @@ import { Document } from "mongoose";
 
 export type TileDocument = Tile & Document;
 
-@Schema()
+@Schema({ timestamps: { createdAt: true, updatedAt: true } })
 export class Tile {
   @Prop({ required: true })
   color: string;
-
-  @Prop({ default: new Date().toUTCString() })
-  createdAt: string;
-
-  @Prop({ default: new Date().toUTCString() })
-  updatedAt: string;
 }
 
 export const TileSchema = SchemaFactory.createForClass(Tile)

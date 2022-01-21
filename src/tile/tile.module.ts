@@ -6,14 +6,10 @@ import { TileService } from "./tile.service";
 
 @Module({
   imports: [
-    MongooseModule.forFeatureAsync([
+    MongooseModule.forFeature([
       {
         name: Tile.name,
-        useFactory: () => {
-          const schema = TileSchema;
-          schema
-          return schema
-        },
+        schema: TileSchema
       },
     ]),
   ],
