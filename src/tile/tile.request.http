@@ -9,15 +9,10 @@ Content-Type: application/json
 {
     "changed": [
         {
-            "color": "#FFB085",
-            "_id": "61e92ca7eac1a7a669a15e3f"
-        }
-    ],
-    "added": [
-        {
             "color": "#90AACB",
-            "_id": "61e92ca7eac1a7a669a15e3f"
+            "_id": "61e9e4af06ef5968267e8e2b"
         }
     ],
-    "deleted": ["61e92bfa0c7eb3897f24b089"]
+    "added": [],
+    "deleted": []
 }
