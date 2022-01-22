@@ -13,7 +13,7 @@ import { UserModule } from "./user/user.module";
     UserModule,
     AuthModule,
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(process.env.DB_CONN_STRING, { dbName: "tilesDB" }),
+    MongooseModule.forRoot(process.env.DB_CONN_STRING, { dbName: process.env.DB_NAME    }),
   ],
   controllers: [AppController],
   providers: [AppService],
