@@ -3,7 +3,6 @@ import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { AuthModule } from "./auth/auth.module";
 import { TileModule } from "./tile/tile.module";
 import { UserModule } from "./user/user.module";
 
@@ -11,7 +10,6 @@ import { UserModule } from "./user/user.module";
   imports: [
     TileModule,
     UserModule,
-    AuthModule,
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.DB_CONN_STRING, { dbName: process.env.DB_NAME    }),
   ],
