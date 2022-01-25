@@ -25,12 +25,12 @@ export class UserController {
   }
 
   @Post("/login")
-  login(@Body() createUser: LoginUserDto) {
-    return this.authService.login();
+  login(@Body() loginUser: LoginUserDto) {
+    return this.authService.login(loginUser);
   }
 
   @Post("/signup")
   signup(@Body() createUser: CreateUserDto) {
-    return this.authService.signup();
+    return this.authService.signup(createUser);
   }
 }
