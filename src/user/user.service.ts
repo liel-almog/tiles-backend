@@ -7,5 +7,5 @@ export class UserService {
 
   getByRole(role: string) {}
 
-  updateRole() {}
+  updateRoles() {}
 }
