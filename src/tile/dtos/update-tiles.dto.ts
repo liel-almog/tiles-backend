@@ -14,5 +14,5 @@ export class UpdateTiles {
   changed: TileDto[];
   @IsArray()
   @Type(() => ObjectID)
-  deleted: ObjectID[];
+  deleted: string[];
 }
