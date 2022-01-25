@@ -1,5 +1,5 @@
 ### Create user
-POST http://localhost:8080/auth/signup 
+POST http://localhost:8080/user/signup 
 content-type: application/json
 
 {
@@ -8,11 +8,42 @@ content-type: application/json
     "password": "1dfs1234"
 }
 
-###
-POST http://localhost:8080/auth/login
+### Login a user
+POST http://localhost:8080/user/login
 Content-Type: application/json
 
 {
-    "email": "liel@as.com",
-    "password": "asdawadas"
+    "email": "liel@gmail.com",
+    "password": "1wda3456"
+}
+
+### Get all users
+GET http://localhost:8080/user
+
+### Get all users by role
+GET http://localhost:8080/user/role/Viewer HTTP/1.1
+
+### Update users role
+PATCH http://localhost:8080/user/role
+Content-Type: application/json
+
+{
+    "updateRoles": [
+        {
+            "_id": "61cd8fc6bae0d1dcec55f802",
+            "role": "Viewer"
+        },
+        {
+            "_id": "61d1fa12a6eccb7c6df9d8ee",
+            "role": "Moderator"
+        },
+        {
+            "_id": "61d1fa6aa6eccb7c6df9d8ef",
+            "role": "Viewer"
+        },
+        {
+            "_id": "61d58d41c84b77988b59d109",
+            "role": "Editor"
+        }
+    ]
 }

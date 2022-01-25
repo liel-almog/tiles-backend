@@ -7,12 +7,17 @@ PATCH http://localhost:8080/tile
 Content-Type: application/json
 
 {
-    "changed": [
+    "added": [
         {
             "color": "#90AACB",
-            "_id": "61e9e4af06ef5968267e8e2b"
+            "id": "61efeef69cfa28fffd7faa8d"
         }
     ],
-    "added": [],
-    "deleted": []
+    "changed": [
+        {
+            "id": "61ebee07315de8b9124b1029",
+            "color": "#FFB085"
+        }
+    ],
+    "deleted": ["61e9e4af06ef5968267e8e2b"]
 }
