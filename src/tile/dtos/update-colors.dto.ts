@@ -1,13 +1,8 @@
-import { IsMongoId, IsString } from "class-validator";
-import { ObjectId } from "mongodb";
+import { IsArray, ValidateNested } from "class-validator";
+import { TileDto } from "./tile.dto";
 
-class TileDTO {
-  @IsMongoId()
-  _id: ObjectId;
-
-  @IsString()
-  color: string;
-}
 export class UpdateColors {
-  changed: TileDTO[];
+  @IsArray()
+  @ValidateNested({ each: true })
+  changed: TileDto[];
 }

@@ -1,24 +1,17 @@
 import { ObjectID } from "bson";
 import { Type } from "class-transformer";
-import { IsArray, IsMongoId, IsString, ValidateNested } from "class-validator";
-
-class TileDTO {
-  @IsMongoId()
-  _id: ObjectID;
-
-  @IsString()
-  color: string;
-}
+import { IsArray, ValidateNested } from "class-validator";
+import { TileDto } from "./tile.dto";
 
 export class UpdateTiles {
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => TileDTO)
-  added: TileDTO[];
+  @Type(() => TileDto)
+  added: TileDto[];
   @IsArray()
   @ValidateNested()
-  @Type(() => TileDTO)
-  changed: TileDTO[];
+  @Type(() => TileDto)
+  changed: TileDto[];
   @IsArray()
   @Type(() => ObjectID)
   deleted: ObjectID[];
