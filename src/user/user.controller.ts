@@ -11,7 +11,7 @@ export class UserController {
   constructor(private service: UserService, private authService: AuthService) {}
   @Get()
   getAll() {
-    return this.service.getAll();
+    return this.service.getAll({});
   }
 
   @Get("role/:role")
@@ -21,7 +21,7 @@ export class UserController {
 
   @Patch("/role")
   changeRoles(@Body() roles: UpdateRolesDto) {
-    return this.service.updateRoles();
+    return this.service.updateRoles(roles);
   }
 
   @Post("/login")
