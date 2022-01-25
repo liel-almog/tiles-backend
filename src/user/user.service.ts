@@ -1,24 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { User, UserDocument } from "src/schemas/user.schema";
-
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectModel(User.name) private readonly tileModel: Model<UserDocument>,
-  ) {}
+  constructor() {}
 
-  getAll() {
-    return this.tileModel.find({}, { password: false });
-  }
+  getAll() {}
 
-  getByRole(role: string) {
-    return this.tileModel.find({ role }, { password: false });
-  }
+  getByRole(role: string) {}
 
-  updateRole() {
-    const update = [].map(() => {});
-    return this.tileModel.bulkWrite(update);
-  }
+  updateRole() {}
 }

@@ -10,7 +10,7 @@ export class UserController {
   }
 
   @Get("role/:role")
-  getByRole(@Param("role") role: string) {    
-    return this.service.getByRole(role)
+  getByRole(@Param("role") role: string) {
+    return this.service.getByRole(role);
   }
 }
