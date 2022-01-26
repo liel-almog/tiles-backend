@@ -1,0 +1,18 @@
+### Create user
+POST http://localhost:8080/user/signup 
+content-type: application/json
+
+{
+    "name": "sample",
+    "email": "liel@gmail.com",
+    "password": "1dfs1234"
+}
+
+### Login a user
+POST http://localhost:8080/user/login
+Content-Type: application/json
+
+{
+    "email": "liel@gmail.com",
+    "password": "1wda3456"
+}
