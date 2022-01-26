@@ -1,7 +1,9 @@
-import { Body, Controller, Get, Patch } from "@nestjs/common";
+import { Body, Controller, Get, Patch, UseGuards } from "@nestjs/common";
+import { AuthJwtGuard } from "src/guards/jwt.guard";
 import { UpdateTiles } from "./dtos/update-tiles.dto";
 import { TileService } from "./tile.service";
 
+@UseGuards(AuthJwtGuard)
 @Controller("tile")
 export class TileController {
   constructor(private service: TileService) {}
