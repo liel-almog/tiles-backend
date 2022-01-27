@@ -28,7 +28,8 @@ export class AuthController {
     response.cookie("token", token, {
       expires: new Date(Date.now() + +parse("2h")),
       secure: process.env.NODE_ENV ? true : false,
-      httpOnly: process.env.NODE_ENV ? true : false,
+      // httpOnly: process.env.NODE_ENV ? true : false,
+      httpOnly: false,
       sameSite: "lax",
     });
 
