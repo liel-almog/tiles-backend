@@ -6,5 +6,5 @@ export class LoginDto {
   @Type(() => UserDto)
   user: UserDto;
   @Expose()
-  token: string
+  token: string;
 }

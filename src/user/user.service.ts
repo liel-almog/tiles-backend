@@ -15,7 +15,7 @@ export class UserService {
   }): Promise<User[]> {
     return this.prisma.user.findMany(params);
   }
-  
+
   getByRole(role: Role) {
     return this.prisma.user.findMany({ where: { role } });
   }
